@@ -18,16 +18,19 @@ import 'package:learn_bloc_2/service/firebase_api.dart';
 
 import 'bloc/get_news/get_new_event.dart';
 import 'bloc/get_user/get_user_event.dart';
+import 'bloc/noti/noti_bloc.dart';
 import 'firebase_options.dart';
 import 'models/news/article.dart';
 import 'navigator/app_navigator.dart';
 import 'navigator/routes.dart';
 
+BuildContext? contextx;
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
   FireBaseApi().initNotifications();
   setupServiceLocator();
   runApp(MultiBlocProvider(providers: [
@@ -49,7 +52,9 @@ Future<void> main() async {
     BlocProvider(
       create: (context) => SearchNewsBloc(),
       child: const SearchPage(),
-    )
+    ),
+    BlocProvider(
+        create: (context) => NotiBloc(), child: const HomeHeaderWidget()),
   ], child: const MyApp()));
 }
 
@@ -70,7 +75,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     context.read<GetNewsBloc>().add((GetNewsDataEvent()));
     context.read<GetUserBloc>().add((GetUserDataEvent()));
-
+    contextx = context;
     return MaterialApp(
       navigatorKey: AppNavigator.navigatorKey,
       onGenerateRoute: AppNavigator.getRoute,

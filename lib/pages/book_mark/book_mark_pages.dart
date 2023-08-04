@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:learn_bloc_2/bloc/book_mark/book_mark_event.dart';
 import 'package:learn_bloc_2/gen/assets.gen.dart';
+import 'package:learn_bloc_2/service/firebase_api.dart';
 
 import '../../bloc/book_mark/book_mark_bloc.dart';
 import '../../bloc/book_mark/book_mark_state.dart';
@@ -97,6 +98,11 @@ class BookMarkPage extends StatelessWidget {
                 }),
               ),
             ),
+            ElevatedButton(
+                onPressed: () {
+                  FireBaseApi().sendNotification();
+                },
+                child: const Text("Send"))
           ],
         ),
       ),

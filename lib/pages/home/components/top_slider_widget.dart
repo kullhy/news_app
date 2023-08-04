@@ -9,6 +9,7 @@ import '../../../utils/utils.dart';
 class TopSliderWidget extends StatelessWidget {
   const TopSliderWidget(
       {super.key, required this.article, required this.isLoaded});
+
   final Article article;
   final bool isLoaded;
 
@@ -67,6 +68,7 @@ class TopSliderWidget extends StatelessWidget {
                               height: 1.4,
                               color: const Color(0xffffffff),
                             ),
+                            overflow: TextOverflow.fade,
                           ),
                         ],
                       ),

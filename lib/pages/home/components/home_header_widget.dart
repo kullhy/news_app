@@ -4,11 +4,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:learn_bloc_2/bloc/get_user/get_user_bloc.dart';
 import 'package:learn_bloc_2/bloc/get_user/get_user_state.dart';
+import 'package:learn_bloc_2/bloc/noti/noti_state.dart';
+import '../../../bloc/noti/noti_bloc.dart';
+import '../../../bloc/noti/noti_event.dart';
 import '../../../gen/assets.gen.dart';
 import '../../../utils/constants/app_colors.dart';
 import '../../../utils/utils.dart';
 
 import 'round_icon_button_widget.dart';
+
+bool isNoti = false;
 
 class HomeHeaderWidget extends StatelessWidget {
   const HomeHeaderWidget({
@@ -17,6 +22,7 @@ class HomeHeaderWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    context.read<NotiBloc>().add((SetNotiEvent()));
     log("header");
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -64,15 +70,48 @@ class HomeHeaderWidget extends StatelessWidget {
             })
           ],
         ),
-        RoundIconButtonWidget(
-          iconName: Assets.icons.icNotification.path,
-          iconColor: AppColors.primaryColor,
-          iconWidth: 20,
-          iconHeight: 20,
-          borderColor: AppColors.borderColor,
-          onTap: () {
-            // context.read<BookMarkBloc>().add((Book()));
-          },
+        Stack(
+          children: [
+            RoundIconButtonWidget(
+              iconName: Assets.icons.icNotification.path,
+              iconColor: AppColors.primaryColor,
+              iconWidth: 20,
+              iconHeight: 20,
+              borderColor: AppColors.borderColor,
+              onTap: () {
+                // context.read<BookMarkBloc>().add((Book()));
+              },
+            ),
+            BlocBuilder<NotiBloc, NotiState>(builder: (context, state) {
+              if (state is NotiLoaded) {
+                return Visibility(
+                  visible: state.isNoti,
+                  child: Container(
+                    alignment: Alignment.topRight,
+                    height: 12,
+                    width: 12,
+                    decoration: const BoxDecoration(
+                      color: Colors.red,
+                      shape: BoxShape.circle,
+                    ),
+                  ),
+                );
+              } else {
+                return Visibility(
+                  visible: isNoti ? true : false,
+                  child: Container(
+                    alignment: Alignment.topRight,
+                    height: 12,
+                    width: 12,
+                    decoration: const BoxDecoration(
+                      color: Colors.red,
+                      shape: BoxShape.circle,
+                    ),
+                  ),
+                );
+              }
+            })
+          ],
         ),
       ],
     );

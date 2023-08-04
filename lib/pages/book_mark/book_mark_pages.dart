@@ -55,6 +55,7 @@ class BookMarkPage extends StatelessWidget {
                       itemBuilder: (BuildContext context, int index) {
                         final item = state.listArticle[index].title!;
                         return Dismissible(
+                          // dragStartBehavior: DragStartBehavior.s,
                           background: Container(
                             decoration:
                                 const BoxDecoration(color: Colors.white),

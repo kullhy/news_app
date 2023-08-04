@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
@@ -13,15 +14,21 @@ import 'package:learn_bloc_2/pages/home/home_page.dart';
 import 'package:learn_bloc_2/pages/login/login_page.dart';
 import 'package:learn_bloc_2/pages/search/search_page.dart';
 import 'package:learn_bloc_2/pages/splash/splash_page.dart';
-
+import 'package:learn_bloc_2/service/firebase_api.dart';
 
 import 'bloc/get_news/get_new_event.dart';
 import 'bloc/get_user/get_user_event.dart';
+import 'firebase_options.dart';
 import 'models/news/article.dart';
 import 'navigator/app_navigator.dart';
 import 'navigator/routes.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  FireBaseApi().initNotifications();
   setupServiceLocator();
   runApp(MultiBlocProvider(providers: [
     BlocProvider(create: (context) => SplashBloc(), child: const SplashPage()),

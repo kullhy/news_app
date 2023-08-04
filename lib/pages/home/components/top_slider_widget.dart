@@ -52,6 +52,8 @@ class TopSliderWidget extends StatelessWidget {
                           height: 1.3,
                           color: const Color(0xffffffff),
                         ),
+                        // maxLines: ,
+                        // overflow: TextOverflow.ellipsis,
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
